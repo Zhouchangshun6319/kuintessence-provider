@@ -1,0 +1,43 @@
+.click-ripple-div {
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: transparent;
+	width: 0;
+	height: 0;
+	border-radius: 50%;
+	translate: -50% -50%;
+}
+.click-ripple-div.animate1 {
+	animation: animate1 0.3s cubic-bezier(0, 0, 0, 1) forwards;
+}
+.click-ripple-div.animate2 {
+	animation: animate2 0.3s cubic-bezier(0, 0, 0, 1) forwards;
+}
+
+@keyframes animate1 {
+	0% {
+		width: 0;
+		height: 0;
+		background: rgba(255, 255, 255, 1);
+	}
+	100% {
+		width: var(--click-ripple-radius);
+		height: var(--click-ripple-radius);
+		background: rgb(38, 180, 244);
+	}
+}
+
+@keyframes animate2 {
+	0% {
+		background-color: rgb(38, 180, 244);
+		width: var(--click-ripple-radius);
+		height: var(--click-ripple-radius);
+	}
+	100% {
+		background-color: rgba(33, 190, 252, 0);
+		width: var(--click-ripple-radius);
+		height: var(--click-ripple-radius);
+	}
+}

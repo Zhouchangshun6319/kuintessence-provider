@@ -1,0 +1,151 @@
+<template>
+	<div class="main-content">
+		<div class="left glass-card">
+			<!-- <div class="blank"></div> -->
+			<div class="tree">
+				<div v-for="_node in treeNode" class="tree-c tree-1" :key="_node.name">
+					<div class="text" :class="{ active: _node.name == componentId }" v-click-ripple="{ disabled: isDisabled(_node.name), call: toPage }" @click="changeNode(_node)">
+						<q-icon :name="_node.icon" size="24px" class="q-ml-md q-mr-xs" style="margin-bottom: 2px" />
+						{{ _node.label }}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="right glass-card">
+			<router-view v-slot="{ Component }">
+				<keep-alive>
+					<component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive" />
+				</keep-alive>
+				<component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
+			</router-view>
+		</div>
+	</div>
+</template>
+
+<script lang="ts">
+import { ref, reactive, defineComponent, onActivated } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+
+export default defineComponent({
+	setup() {
+		const treeNode: any = reactive([
+			{
+				label: '软件管理',
+				name: 'InstalledSoftware',
+				icon: 'widgets',
+			},
+			{
+				label: '软件仓库',
+				name: 'ContentEntity',
+				icon: 'inbox',
+			},
+			{
+				label: '安装队列',
+				name: 'SoftwareInstallHistory',
+				icon: 'move_to_inbox',
+			},
+			{
+				label: '配置软件源',
+				name: 'SoftwareSource',
+				icon: 'construction',
+			},
+			{
+				label: '添加本地',
+				name: 'LocalSoftwareSource',
+				icon: 'folder',
+			},
+			{
+				label: '黑名单',
+				name: 'SoftwareBlackList',
+				icon: 'do_disturb',
+			},
+		]);
+
+		//理由相关
+		const router = useRouter();
+		const route = useRoute();
+
+		//动态组件
+		const componentId: any = ref('DataExport');
+		function changeNode(node: any) {
+			componentId.value = node.name;
+		}
+
+		onActivated(() => {
+			componentId.value = route.name;
+		});
+
+		function toPage() {
+			router.push({ name: componentId.value });
+		}
+		function isDisabled(name: string) {
+			let is = () => {
+				if (route.name == name) return true;
+				else return false;
+			};
+			return is;
+		}
+
+		return {
+			treeNode,
+			componentId,
+			changeNode,
+			isDisabled,
+			toPage,
+		};
+	},
+});
+</script>
+
+<style lang="scss" scoped>
+.main-content {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+
+	.left {
+		// font-size: 18px;
+		margin-right: 20px;
+		.blank {
+			height: 40px;
+		}
+	}
+	.right {
+		flex: 1;
+		overflow: hidden;
+	}
+}
+.tree {
+	width: 220px;
+	padding: 20px 0;
+	.tree-c {
+		padding-top: 8px;
+		.text {
+			cursor: pointer;
+			color: $font-color;
+			line-height: 50px;
+			&:hover:not(.active) {
+				background: #fff;
+			}
+		}
+	}
+	.tree-1 {
+		.text {
+			padding: 0 10px;
+			&.active {
+				color: #ff5722;
+			}
+		}
+	}
+	.tree-2 {
+		.text {
+			padding: 0 10px;
+			padding-left: 30px;
+			&.active {
+				background: $primary-light-color;
+				color: $primary-color;
+			}
+		}
+	}
+}
+</style>

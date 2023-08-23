@@ -1,0 +1,81 @@
+// app global css in SCSS form
+/*修改滚动条样式*/
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+	/**/
+}
+::-webkit-scrollbar-track {
+	background: rgb(239, 239, 239);
+	border-radius: 2px;
+}
+::-webkit-scrollbar-thumb {
+	background: #bfbfbf;
+	border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #333;
+}
+::-webkit-scrollbar-corner {
+	background: #ddd;
+}
+body,
+html {
+	color: $font-color;
+}
+
+//修改整体table样式
+.q-table__card {
+	background: transparent;
+}
+.q-table {
+	max-height: 100%;
+	color: $font-color;
+	border-radius: 2px;
+	background: transparent;
+	tr,
+	td,
+	.q-td {
+		border-color: #fff;
+		&:first-child {
+			border-image: linear-gradient(30deg, transparent 10%, #fff 60%, #eee 54%) 2 2 2 2;
+		}
+		&:last-child {
+			border-image: linear-gradient(-30deg, transparent 10%, #fff 60%, #eee 54%) 2 2 2 2;
+		}
+	}
+
+	.q-checkbox__inner {
+		font-size: 25px;
+	}
+	thead {
+		background: transparent;
+		color: #333;
+		th {
+			font-weight: bold;
+		}
+	}
+	tr:nth-child(even) {
+		background: transparent;
+	}
+}
+.q-menu {
+	background: rgba(255, 255, 255, 0.9);
+	box-shadow:
+		0 1px 3px rgb(0 0 0 / 20%),
+		0 1px 1px rgb(0 0 0 / 14%),
+		0 2px 1px -1px rgb(0 0 0 / 12%);
+	border-radius: 16px;
+}
+.glass-card {
+	background: rgba(255, 255, 255, 0.72);
+	box-shadow:
+		0 1px 3px rgb(0 0 0 / 20%),
+		0 1px 1px rgb(0 0 0 / 14%),
+		0 2px 1px -1px rgb(0 0 0 / 12%);
+	border-radius: 16px;
+}
+.glass-card-block {
+	background: rgba(255, 255, 255, 0.5) !important;
+	border-radius: 16px !important;
+}
